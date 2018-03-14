@@ -12,7 +12,7 @@ let students = [
         "LastName" : "Perez Leon",
         "Grade": 5,
         "Courses" : []
-    }
+    },
     {
         "Id" : 3,
         "Name" : "Atanacio",
