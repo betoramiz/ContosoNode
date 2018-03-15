@@ -1,1 +1,16 @@
 <h2>List of Students</h2>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Grade</th>
+        <th></th>
+    </tr>
+    {{#each students}}
+    <tr>
+        <td>{{ this.Name }}</td>
+        <td>{{ this.Grade }}</td>
+        <td></td>
+    </tr>
+    {{/each }}
+</table>
