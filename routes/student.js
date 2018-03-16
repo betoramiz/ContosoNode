@@ -1,19 +1,12 @@
 const express = require('express');
 const route = express.Router();
+const studentController = require('../controllers/student');
 
-let students = require('../models/student').students;
-
-route.get('/', (req, res) => {
-    res.render('./students/list', { students : students });
-});
+route.get('/', studentController.ListStudent);
 
 
-route.get('/add', (req, res) => {
-    res.render('./students/add');
-});
+route.get('/add', studentController.AddStudent);
 
-route.post('/add', (req, res) => {
-    res.send("Add Student to student list");    
-});
+route.post('/add', studentController.AddStudentPost);
 
 module.exports = route;
