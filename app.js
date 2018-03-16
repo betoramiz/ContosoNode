@@ -14,7 +14,9 @@ app.set('view engine', 'hbs');
 
 //routes
 const studentRoute = require('./routes/student');
+const dashboardRoute = require('./routes/dashboard');
 app.use('/student', studentRoute);
+app.use('/dashboard', dashboardRoute);
 
 //app listening
 const port = process.env.PORT || 3000;
