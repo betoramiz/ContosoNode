@@ -6,6 +6,10 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended : true}));
 
+// validator
+const validator = require('express-validator');
+app.use(validator());
+
 //view engine
 var exphbs  = require('express-handlebars');
 const hbs = exphbs.create( { defaultLayout: 'index', layoutsDir : __dirname + '/views', extname : 'hbs'} );

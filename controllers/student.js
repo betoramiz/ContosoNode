@@ -9,5 +9,23 @@ exports.AddStudent = (req, res) => {
 };
 
 exports.AddStudentPost = (req, res) => {
-    res.send("Add Student to student list");    
+    //validate if req is ok    
+    if(req.body.name && req.body.lastname && req.body.grade)
+    {
+        let studentsOrdered = students.sort((a, b) => a.Id < b.Id);
+        let {0: last} = studentsOrdered;
+        
+        let student = {
+            Id : last,
+            Name : req.body.name,
+            LastName : req.body.lastname,
+            Grade : req.body.grade
+        };
+
+        students.push(student);
+
+        res.redirect('/student/');
+    }    
+    else
+        throw Error("Input invalido");
 };
