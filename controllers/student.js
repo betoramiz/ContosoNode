@@ -5,13 +5,26 @@ exports.ListStudent = (req, res) => {
 };
 
 exports.AddStudent = (req, res) => {
-    res.render('./students/add');
+    res.render('./students/add', {errors: req.session.errors});
 };
 
 exports.AddStudentPost = (req, res) => {
-    //validate if req is ok    
-    if(req.body.name && req.body.lastname && req.body.grade)
+    let name = req.body.name;
+    let lastname = req.body.lastname;
+    let grade = req.body.grade;
+    
+    //validate if req is ok
+    req.checkBody('name', 'Name is required').notEmpty();
+    req.checkBody('lastname', 'LAst Name is required').notEmpty();
+    req.checkBody('grade', 'Grade is required').notEmpty();
+    
+    let errors = req.validationErrors();    
+    if(errors)
     {
+        req.session.errors = errors;
+        res.redirect('/student/add');
+    }
+    else{
         let studentsOrdered = students.sort((a, b) => a.Id < b.Id);
         let {0: last} = studentsOrdered;
         
@@ -24,8 +37,6 @@ exports.AddStudentPost = (req, res) => {
 
         students.push(student);
 
-        res.redirect('/student/');
-    }    
-    else
-        throw Error("Input invalido");
+        res.redirect('/student/');   
+    }     
 };

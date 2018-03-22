@@ -10,6 +10,10 @@ app.use(bodyParser.urlencoded({ extended : true}));
 const validator = require('express-validator');
 app.use(validator());
 
+//sessions
+var session = require('express-session');
+app.use(session({secret: 'krunal', saveUninitialized: false, resave: false}));
+
 //view engine
 var exphbs  = require('express-handlebars');
 const hbs = exphbs.create( { defaultLayout: 'index', layoutsDir : __dirname + '/views', extname : 'hbs'} );
@@ -25,6 +29,11 @@ const studentRoute = require('./routes/student');
 const dashboardRoute = require('./routes/dashboard');
 app.use('/student', studentRoute);
 app.use('/dashboard', dashboardRoute);
+
+//Error handler
+app.use(function(error, req, res, next) {    
+    res.json({ message: error.message });
+  });
 
 //app listening
 const port = process.env.PORT || 3000;
