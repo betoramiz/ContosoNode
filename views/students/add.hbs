@@ -1,12 +1,16 @@
 <h3>Add Student</h3>
-
-{{#if errors }}
-    <ul class="alert alert-danger">
-        {{#each errors }}
-          <li>{{ this.msg }}</li>
-        {{/each}}
-    </ul>    
+{{#if success}}    
+    <p class="text-success">Input correct</p>
+{{else}}
+    {{#if errors }}
+        <ul class="alert alert-danger">
+            {{#each errors }}
+            <li>{{ this.msg }}</li>
+            {{/each}}
+        </ul>    
+    {{/if}}
 {{/if}}
+
 <form action="/student/add" method="POST">
     <div class="form-group">
         <label for="name">Name</label>

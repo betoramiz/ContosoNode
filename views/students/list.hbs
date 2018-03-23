@@ -5,12 +5,18 @@
         <th>Name</th>
         <th>Grade</th>
         <th></th>
+        <th></th>
     </tr>
     {{#each students}}
     <tr>
         <td>{{ this.Name }}</td>
         <td>{{ this.Grade }}</td>
-        <td></td>
+        <td>
+            <a href="/student/detail/{{ this.Id }}">Detalle</a>
+        </td>
+        <td>
+            <a href="/student/update/{{ this.Id }}">Update</a>
+        </td>
     </tr>
     {{/each }}
 </table>

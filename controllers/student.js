@@ -4,8 +4,10 @@ exports.ListStudent = (req, res) => {
     res.render('./students/list', { students : students });
 };
 
-exports.AddStudent = (req, res) => {
-    res.render('./students/add', {errors: req.session.errors});
+exports.AddStudent = (req, res) => {                
+    console.log(req.session);
+     res.render('./students/add', {success : req.session.success, errors: req.session.errors});
+    req.session.success = true;
 };
 
 exports.AddStudentPost = (req, res) => {
@@ -22,9 +24,12 @@ exports.AddStudentPost = (req, res) => {
     if(errors)
     {
         req.session.errors = errors;
+        req.session.success = false;
         res.redirect('/student/add');
     }
     else{
+        req.session.success = false;
+
         let studentsOrdered = students.sort((a, b) => a.Id < b.Id);
         let {0: last} = studentsOrdered;
         
@@ -39,4 +44,31 @@ exports.AddStudentPost = (req, res) => {
 
         res.redirect('/student/');   
     }     
+};
+
+exports.DetailStudent = (req, res) => {
+    let userId = req.params.id;
+    let student = students.find(x => x.Id == userId);
+    if(student == undefined || student == null)
+        res.render('notfound');
+    else
+        res.render('./students/detail', {student : student});
+};
+
+exports.UpdateStudent = (req, res) => {
+    let userId = req.params.id;
+    let student = students.find(x => x.Id == userId);
+    if(student == undefined || student == null)
+        res.render('notfound');
+    else
+        res.render('./students/update', {student : student});
+};
+
+exports.UpdateStudentPost = (req, res) => {
+    let userId = req.body.Id;
+    let student = students.find(x => x.Id == userId);
+    student.Name = req.body.Name;
+    student.LastName = req.body.LastName;
+    student.Grade = req.body.Grade;
+    res.redirect('/student');
 };
